@@ -1,0 +1,38 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - datamodule: mesh_dataset
+  - model: cardiac_latent_ode
+  - trainer: trainer
+  - paths: default
+
+  # optional local config for machine/user specific settings
+  # it's optional since it doesn't need to exist and is excluded from version control
+  - optional local: default
+
+# choice between "latent" and "mesh" prediction
+mode: latent
+
+# directory to save the output
+output_dir: ${paths.output_dir}/${mode}
+
+# passing checkpoint path is necessary for prediction
+ckpt_path: ???
+
+inference_split: all
+max_samples: null
+
+# configure hydra paths
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  job:
+    chdir: false
+  job_logging:
+    handlers:
+      file:
+        filename: /dev/null
+    root:
+      handlers: [console]
