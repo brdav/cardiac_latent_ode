@@ -1,0 +1,5 @@
+# path to data directory
+data_dir: ${oc.env:DATA_DIR}
+
+# path to output directory
+output_dir: ${oc.env:SAVE_DIR}

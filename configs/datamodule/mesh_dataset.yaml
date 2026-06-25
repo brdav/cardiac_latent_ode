@@ -1,0 +1,10 @@
+_target_: cardiac_latent_ode.datamodule.datamodule.DataModule
+
+dataset_cls:
+  _target_: cardiac_latent_ode.datamodule.dataset.MeshDataset
+  _partial_: true
+  h5_data_path: ${paths.data_dir}/preprocessed/meshes.h5
+  cohort_file_path: ${paths.data_dir}/preprocessed/cohort.csv
+
+batch_size: 8
+num_workers: 6

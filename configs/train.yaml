@@ -1,0 +1,40 @@
+# @package _global_
+
+# specify here default configuration
+# order of defaults determines the order in which configs override each other
+defaults:
+  - _self_
+  - datamodule: mesh_dataset
+  - model: cardiac_latent_ode
+  - trainer: trainer
+  - paths: default
+
+  # optional local config for machine/user specific settings
+  # it's optional since it doesn't need to exist and is excluded from version control
+  - optional local: default
+
+# set False to skip model training
+train: True
+
+# evaluate on test set, using best model weights achieved during training
+test: True
+
+# simply provide checkpoint path to resume training
+ckpt_path: null
+
+# seed for random number generators in pytorch, numpy and python.random
+seed: null
+
+# configure hydra paths
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  job:
+    chdir: false
+  job_logging:
+    handlers:
+      file:
+        filename: /dev/null
+    root:
+      handlers: [console]

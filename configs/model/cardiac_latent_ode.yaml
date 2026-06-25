@@ -1,0 +1,46 @@
+_target_: cardiac_latent_ode.model.model.CardiacLatentODE
+
+
+phase_warping:
+  _target_: cardiac_latent_ode.model.modules.PhaseWarpModule
+  warp_mlp_hidden: 16
+  
+
+prior_encoder:
+  _target_: cardiac_latent_ode.model.modules.PriorEncoder
+  latent_size: 64
+  mlp_hidden: 64
+
+
+posterior_encoder:
+  _target_: cardiac_latent_ode.model.modules.PosteriorEncoder
+  latent_size: 64
+  template_mesh_path: ${paths.data_dir}/preprocessed/template_mesh.vtk
+  gnn_channels: 64
+  transformer_num_layers: 2
+  transformer_num_heads: 4
+  transformer_ff_dim: 512
+  transformer_dropout: 0.1
+
+
+decoder:
+  _target_: cardiac_latent_ode.model.modules.Decoder
+  latent_size: 64
+  template_mesh_path: ${paths.data_dir}/preprocessed/template_mesh.vtk
+  gnn_channels: 64
+  node_hidden_size: 64
+  node_num_layers: 3
+  ode_rtol: 0.001
+  ode_atol: 0.0001
+
+
+optimizer_cls:
+  _target_: torch.optim.AdamW
+  _partial_: true
+  lr: 1e-3
+  weight_decay: 1e-6
+
+
+loss_fn:
+  _target_: cardiac_latent_ode.model.loss.BetaVAELoss
+  beta: 5.0

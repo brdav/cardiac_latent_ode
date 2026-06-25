@@ -1,0 +1,19 @@
+# Python cache
+*.pyc
+.ipynb_checkpoints/
+*.egg-info/
+__pycache__/
+
+# Build artifacts
+build/
+dist/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Environment
+.venv/
+
+# OSX-specific
+.DS_Store
