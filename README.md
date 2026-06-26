@@ -2,7 +2,9 @@
 
 <p align="center"><img src="docs/animation.gif" alt="animation" width="60%"></p>
 
-A deep generative model that learns compact latent representations of 3D+T cardiac mesh motion sequences. Given a time-series of biventricular surface meshes, a variational encoder maps the full trajectory to a low-dimensional latent code; a neural ODE decoder reconstructs it. The resulting embeddings are used for downstream cardiovascular risk modelling and survival analysis. Developed using cardiac imaging data from the [UK Biobank](https://www.ukbiobank.ac.uk/).
+[![arXiv](https://img.shields.io/badge/arXiv-2606.26718-b31b1b.svg)](https://arxiv.org/abs/2606.26718)
+
+A deep generative model that learns compact latent representations of 3D+T cardiac mesh motion sequences. Given a time-series of biventricular surface meshes, a variational encoder maps the full trajectory to a low-dimensional latent code; a neural ODE decoder reconstructs it. The resulting embeddings are used for downstream cardiovascular risk modelling and survival analysis. Developed using cardiac imaging data from the [UK Biobank](https://www.ukbiobank.ac.uk/). For more details please refer to the [paper](https://arxiv.org/abs/2606.26718).
 
 ![](docs/schematic.png)
 
@@ -168,9 +170,21 @@ The notebook implements a two-step Cox regression pipeline:
 
 The model architecture is not tied to a specific mesh topology — it can be retrained on any biventricular surface mesh dataset by following the same preprocessing and training steps above.
 
-However, the evaluation and prediction pipelines rely on two asset files (`landmark_indices_bundle.npz`, `mesh_remap_bundle.npz`) that encode topology-specific information (landmark indices and spiral convolution transforms) derived from the template mesh. These must be regenerated to match your mesh topology before running `eval` or `predict`.
+However, the evaluation and prediction pipelines rely on two asset files (`landmark_indices_bundle.npz`, `mesh_remap_bundle.npz`) that encode topology-specific information (landmark indices and structure separation) derived from the template mesh. These must be regenerated to match your mesh topology before running `eval` or `predict`.
 
 The notebook [notebooks/explore_assets.ipynb](notebooks/explore_assets.ipynb) walks through how to inspect the existing assets and create new ones for a different topology.
+
+## Citation
+
+If you find this code useful in your research, please consider citing the [paper](https://arxiv.org/abs/2606.26718):
+```bibtex
+@article{bruggemann2026latentode,
+  title={A Latent ODE Approach to Spatiotemporal Modeling of Cine Cardiac MRI},
+  author={Bruggemann, David and others},
+  journal={arXiv preprint arXiv:2606.26718},
+  year={2026}
+}
+```
 
 ## License
 
