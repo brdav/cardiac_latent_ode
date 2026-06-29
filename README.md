@@ -1,8 +1,10 @@
 <h1 align="center">A Latent ODE Approach to Spatiotemporal Modeling of Cine Cardiac MRI</h1>
 
-<p align="center"><img src="docs/animation.gif" alt="animation" width="60%"></p>
+<p align="center">
+  <a href="https://arxiv.org/abs/2606.26718"><img src="https://img.shields.io/badge/arXiv-2606.26718-b31b1b.svg" alt="arXiv"></a>
+</p>
 
-[![arXiv](https://img.shields.io/badge/arXiv-2606.26718-b31b1b.svg)](https://arxiv.org/abs/2606.26718)
+<p align="center"><img src="docs/animation.gif" alt="animation" width="60%"></p>
 
 A deep generative model that learns compact latent representations of 3D+T cardiac mesh motion sequences. Given a time-series of biventricular surface meshes, a variational encoder maps the full trajectory to a low-dimensional latent code; a neural ODE decoder reconstructs it. The resulting embeddings are used for downstream cardiovascular risk modelling and survival analysis. Developed using cardiac imaging data from the [UK Biobank](https://www.ukbiobank.ac.uk/). For more details please refer to the [paper](https://arxiv.org/abs/2606.26718).
 

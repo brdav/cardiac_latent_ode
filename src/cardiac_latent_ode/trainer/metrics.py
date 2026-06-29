@@ -33,33 +33,6 @@ def denormalize_trajectory(
     return x_bvtc * std + mean
 
 
-def vertex_normals_bvtc(
-    vertices_bvtc: torch.Tensor, faces_f3: torch.Tensor
-) -> torch.Tensor:
-    """Compute per-vertex normals for a batched temporal mesh tensor [B,V,T,3]."""
-    if vertices_bvtc.ndim != 4 or vertices_bvtc.shape[-1] != 3:
-        raise ValueError(
-            f"vertices_bvtc must have shape [B, V, T, 3], got {tuple(vertices_bvtc.shape)}"
-        )
-    if faces_f3.ndim != 2 or faces_f3.shape[1] != 3:
-        raise ValueError(
-            f"faces_f3 must have shape [F, 3], got {tuple(faces_f3.shape)}"
-        )
-
-    faces = faces_f3.to(device=vertices_bvtc.device, dtype=torch.long)
-    v0 = vertices_bvtc[:, faces[:, 0], :, :]
-    v1 = vertices_bvtc[:, faces[:, 1], :, :]
-    v2 = vertices_bvtc[:, faces[:, 2], :, :]
-
-    face_normals = torch.cross(v1 - v0, v2 - v0, dim=-1)
-    vertex_normals = torch.zeros_like(vertices_bvtc)
-    vertex_normals.index_add_(1, faces[:, 0], face_normals)
-    vertex_normals.index_add_(1, faces[:, 1], face_normals)
-    vertex_normals.index_add_(1, faces[:, 2], face_normals)
-
-    return torch.nn.functional.normalize(vertex_normals, dim=-1, eps=1e-8)
-
-
 def second_difference(vertices_bvtc: torch.Tensor) -> torch.Tensor:
     """Finite-difference acceleration along time, shape [B,V,T-2,3]."""
     if vertices_bvtc.ndim != 4:
@@ -93,9 +66,26 @@ def reconstruction_metric_sums(
     euclid_sum = float(per_vertex_l2.sum().item())
     euclid_count = int(per_vertex_l2.numel())
 
-    pred_normals = vertex_normals_bvtc(pred_bvtc, faces_f3)
-    target_normals = vertex_normals_bvtc(target_bvtc, faces_f3)
-    cos_sim = (pred_normals * target_normals).sum(dim=-1).clamp(-1.0, 1.0)
+    faces = faces_f3.to(device=pred_bvtc.device, dtype=torch.long)
+    pred_fn = torch.nn.functional.normalize(
+        torch.cross(
+            pred_bvtc[:, faces[:, 1], :, :] - pred_bvtc[:, faces[:, 0], :, :],
+            pred_bvtc[:, faces[:, 2], :, :] - pred_bvtc[:, faces[:, 0], :, :],
+            dim=-1,
+        ),
+        dim=-1,
+        eps=1e-8,
+    )
+    target_fn = torch.nn.functional.normalize(
+        torch.cross(
+            target_bvtc[:, faces[:, 1], :, :] - target_bvtc[:, faces[:, 0], :, :],
+            target_bvtc[:, faces[:, 2], :, :] - target_bvtc[:, faces[:, 0], :, :],
+            dim=-1,
+        ),
+        dim=-1,
+        eps=1e-8,
+    )
+    cos_sim = (pred_fn * target_fn).sum(dim=-1).clamp(-1.0, 1.0)
     ang_deg = torch.arccos(cos_sim) * (180.0 / math.pi)
     normal_sum = float(ang_deg.sum().item())
     normal_count = int(ang_deg.numel())
