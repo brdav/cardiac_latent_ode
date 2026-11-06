@@ -1,12 +1,13 @@
-<h1 align="center">A Latent ODE Approach to Spatiotemporal Modeling of Cine Cardiac MRI</h1>
+<h1 align="center">A Latent ODE Approach to Full-Cycle Biventricular Cardiac Motion Modeling from Cine MRI</h1>
 
 <p align="center">
+  <a href="https://doi.org/10.1016/j.media.2026.104376"><img src="https://img.shields.io/badge/Medical%20Image%20Analysis-10.1016%2Fj.media.2026.104376-0a6ebd.svg" alt="Medical Image Analysis"></a>
   <a href="https://arxiv.org/abs/2606.26718"><img src="https://img.shields.io/badge/arXiv-2606.26718-b31b1b.svg" alt="arXiv"></a>
 </p>
 
 <p align="center"><img src="docs/animation.gif" alt="animation" width="60%"></p>
 
-A deep generative model that learns compact latent representations of 3D+T cardiac mesh motion sequences. Given a time-series of biventricular surface meshes, a variational encoder maps the full trajectory to a low-dimensional latent code; a neural ODE decoder reconstructs it. The resulting embeddings are used for downstream cardiovascular risk modelling and survival analysis. Developed using cardiac imaging data from the [UK Biobank](https://www.ukbiobank.ac.uk/). For more details please refer to the [paper](https://arxiv.org/abs/2606.26718).
+A deep generative model that learns compact latent representations of 3D+T cardiac mesh motion sequences. Given a time-series of biventricular surface meshes, a variational encoder maps the full trajectory to a low-dimensional latent code; a neural ODE decoder reconstructs it. The resulting embeddings are used for downstream cardiovascular risk modelling and survival analysis. Developed using cardiac imaging data from the [UK Biobank](https://www.ukbiobank.ac.uk/). For more details please refer to the [paper](https://doi.org/10.1016/j.media.2026.104376) ([arXiv preprint](https://arxiv.org/abs/2606.26718)).
 
 ![](docs/schematic.png)
 
@@ -178,16 +179,27 @@ The notebook [notebooks/explore_assets.ipynb](notebooks/explore_assets.ipynb) wa
 
 ## Citation
 
-If you find this code useful in your research, please consider citing the [paper](https://arxiv.org/abs/2606.26718):
+If you find this code useful in your research, please consider citing the [paper](https://doi.org/10.1016/j.media.2026.104376):
 ```bibtex
-@article{bruggemann2026latentode,
-  title={A Latent ODE Approach to Spatiotemporal Modeling of Cine Cardiac MRI},
-  author={Bruggemann, David and others},
-  journal={arXiv preprint arXiv:2606.26718},
-  year={2026}
+@article{BRUGGEMANN2027104376,
+  title = {A latent ODE approach to full-cycle biventricular cardiac motion modeling from cine MRI},
+  author = {D. Brüggemann and E. Krymova and F. Ozdemir and J. {von Spiczak} and S. Kozerke and S. Mora and R. Manka and M. Salzmann and O.V. Demler},
+  journal = {Medical Image Analysis},
+  volume = {116},
+  pages = {104376},
+  year = {2027},
+  issn = {1361-8415},
+  doi = {https://doi.org/10.1016/j.media.2026.104376},
+  url = {https://www.sciencedirect.com/science/article/pii/S1361841526004457}
 }
 ```
 
+## Acknowledgements & Data Availability
+
+This research has been conducted using the UK Biobank Resource under application number 206575.
+
+**Data notice:** In compliance with the UK Biobank Material Transfer Agreement, no participant-level data, extracted meshes, raw images, model checkpoints or latent embeddings derived from UK Biobank participants are hosted or redistributed in this repository. Researchers seeking access to the underlying UK Biobank data must apply directly through the [UK Biobank Access Management System](https://www.ukbiobank.ac.uk/).
+
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE). The license applies to the source code only; it does not grant any rights to UK Biobank data or materials, which are governed by the UK Biobank Material Transfer Agreement.

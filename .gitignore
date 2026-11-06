@@ -17,3 +17,13 @@ dist/
 
 # OSX-specific
 .DS_Store
+
+# Data / model artifacts (never commit UK Biobank-derived data)
+*.csv
+*.h5
+*.hdf5
+*.pt
+*.ckpt
+latents.npz
+outputs/
+logs/
