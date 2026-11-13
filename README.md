@@ -9,8 +9,6 @@
 
 A deep generative model that learns compact latent representations of 3D+T cardiac mesh motion sequences. Given a time-series of biventricular surface meshes, a variational encoder maps the full trajectory to a low-dimensional latent code; a neural ODE decoder reconstructs it. The resulting embeddings are used for downstream cardiovascular risk modelling and survival analysis. Developed using cardiac imaging data from the [UK Biobank](https://www.ukbiobank.ac.uk/). For more details please refer to the [paper](https://doi.org/10.1016/j.media.2026.104376) ([arXiv preprint](https://arxiv.org/abs/2606.26718)).
 
-![](docs/schematic.png)
-
 ## Installation
 
 ```bash
